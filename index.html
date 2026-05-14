@@ -1124,20 +1124,19 @@ xp_earned: overall>=8 → ${m.xp}، overall 6-7.9 → ${Math.round(m.xp*0.6)}، 
   const usr=`المحور: ${m.badge}\nالمهارة: ${m.title}\nالتحدي: ${q.q}\nالسيناريو: ${q.scenario.replace(/<[^>]+>/g,'')}\nالسياق: ${q.ctx}\n\nنص المتدرب:\n"${ans}"`;
 
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sys,messages:[{role:'user',content:usr}]})});
-    const d=await r.json();
-    clearInterval(iv);
-    const raw=d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
-    const p=JSON.parse(raw);
-    results.push({module:m.title,badge:m.badge,score:p.overall,xpE:p.xp_earned,answer:ans,fb:p});
-    updateXP(p.xp_earned);
-    renderFeedback(p,ans);
-  }catch(e){
-    clearInterval(iv);
-    toast('خطأ في الاتصال — حاول مرة أخرى','t-bad',3000);
-    show('screen-challenge');
-  }
-}
+  const p={
+ overall:8,
+ xp_earned:50,
+ headline:"تجربة ناجحة",
+ sub:"إجابة جيدة",
+ hook_score:8,
+ story_score:7,
+ emotion_score:8,
+ clarity_score:7,
+ diagnosis:"تجربة تجريبية",
+ fix:"لا يوجد",
+ better_example:"مثال تجريبي"
+};
 
 function renderFeedback(p,ans){
   const vc=document.getElementById('verdict');
