@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Writing & Storytelling — Pharma Overseas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#06080F;
+  --deep:#0B0F1A;
+  --card:#111827;
+  --card2:#1A2235;
+  --lift:#212D44;
+  --teal:#0AECB8;
+  --teal2:#08C99E;
+  --teal-glow:rgba(10,236,184,0.12);
+  --teal-dim:rgba(10,236,184,0.07);
+  --amber:#F59E0B;
+  --amber2:#FCD34D;
+  --rose:#F43F5E;
+  --rose2:#FB7185;
+  --sky:#38BDF8;
+  --text:#EEF2FF;
+  --text2:#94A3B8;
+  --text3:#475569;
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.12);
+  --font:'Cairo',sans-serif;
+  --display:'Tajawal',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--night);color:var(--text);min-height:100vh;direction:rtl;overflow-x:hidden;}
+
+/* NOISE TEXTURE */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:128px;
+}
+
+/* GRID */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(10,236,184,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(10,236,184,0.025) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+/* ORBS */
+.orb{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(100px);}
+.orb1{width:600px;height:600px;background:rgba(10,236,184,0.18);top:-250px;right:-200px;animation:drift1 15s ease-in-out infinite;}
+.orb2{width:500px;height:500px;background:rgba(56,189,248,0.12);bottom:-150px;left:-150px;animation:drift2 18s ease-in-out infinite;}
+.orb3{width:300px;height:300px;background:rgba(245,158,11,0.08);top:50%;left:50%;transform:translate(-50%,-50%);animation:drift3 12s ease-in-out infinite;}
+@keyframes drift1{0%,100%{transform:translate(0,0);}50%{transform:translate(40px,30px);}}
+@keyframes drift2{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,40px);}}
+@keyframes drift3{0%,100%{transform:translate(-50%,-50%);}50%{transform:translate(-50%,-40%);}  }
+
+/* WRAPPER */
+#app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 80px;}
+
+/* SCREENS */
+.screen{display:none;}
+.screen.active{display:block;animation:reveal 0.45s cubic-bezier(0.16,1,0.3,1);}
+@keyframes reveal{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:var(--card2);border:1px solid var(--border2);border-radius:14px;
+  padding:12px 26px;font-size:14px;font-weight:600;color:var(--text);
+  opacity:0;transition:all 0.3s;z-index:9999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.t-good{border-color:rgba(10,236,184,0.5);color:var(--teal);}
+.toast.t-bad{border-color:rgba(244,63,94,0.5);color:var(--rose2);}
+.toast.t-xp{border-color:rgba(245,158,11,0.5);color:var(--amber2);}
+
+/* ===========================
+   TOPBAR
+   =========================== */
+#topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0 18px;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;
+  background:rgba(6,8,15,0.88);
+  backdrop-filter:blur(16px);
+  z-index:100;margin-bottom:4px;
+}
+.tb-logo{display:flex;align-items:center;gap:12px;}
+.tb-mark{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;box-shadow:0 4px 20px rgba(10,236,184,0.3);
+}
+.tb-name{font-family:var(--display);font-size:17px;font-weight:800;color:var(--text);letter-spacing:-0.3px;}
+.tb-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.xp-pill{display:flex;align-items:center;gap:7px;
+  background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:7px 16px;}
+.xp-n{font-family:var(--display);font-size:15px;font-weight:900;color:var(--amber2);}
+.xp-l{font-size:11px;color:var(--text3);}
+.lvl-pill{font-size:11px;font-weight:700;letter-spacing:0.5px;
+  padding:7px 14px;border-radius:20px;
+  background:var(--teal-dim);border:1px solid rgba(10,236,184,0.25);color:var(--teal);}
+
+/* ===========================
+   WELCOME SCREEN
+   =========================== */
+.hero{padding:64px 0 40px;position:relative;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--teal-dim);border:1px solid rgba(10,236,184,0.2);
+  border-radius:20px;padding:8px 18px;margin-bottom:28px;
+  font-size:12px;font-weight:700;color:var(--teal);letter-spacing:0.5px;
+}
+.hero-eyebrow::before{content:'';width:7px;height:7px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.5);}}
+
+.hero-h1{font-family:var(--display);font-size:58px;font-weight:900;line-height:1.1;letter-spacing:-2px;margin-bottom:8px;}
+.hero-h1 .w1{color:var(--text);}
+.hero-h1 .w2{color:var(--text);}
+.hero-h1 .w3{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--sky) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-tagline{font-size:17px;color:var(--text2);line-height:1.85;max-width:540px;margin-bottom:48px;}
+
+/* PILLARS STRIP */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:48px;}
+.pillar{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:22px 18px;position:relative;overflow:hidden;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:0;transition:opacity 0.3s;}
+.pillar:hover{border-color:var(--border2);transform:translateY(-2px);}
+.pillar:hover::before{opacity:1;}
+.pillar-icon{font-size:28px;margin-bottom:12px;display:block;}
+.pillar-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.pillar-desc{font-size:12px;color:var(--text3);line-height:1.65;}
+
+/* JOURNEY PREVIEW */
+.journey-preview{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:28px;margin-bottom:36px;
+}
+.jp-title{font-size:12px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px;}
+.jp-modules{display:flex;flex-direction:column;gap:10px;}
+.jp-mod{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 16px;border-radius:12px;
+  background:var(--deep);border:1px solid var(--border);
+  transition:border-color 0.15s;
+}
+.jp-mod:hover{border-color:var(--border2);}
+.jp-num{
+  width:32px;height:32px;border-radius:9px;flex-shrink:0;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:13px;font-weight:800;color:var(--text3);
+}
+.jp-info{flex:1;}
+.jp-mod-title{font-size:13px;font-weight:700;color:var(--text2);}
+.jp-mod-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.jp-badge{font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;}
+.jp-badge.core{background:var(--teal-dim);border:1px solid rgba(10,236,184,0.2);color:var(--teal);}
+.jp-badge.craft{background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);color:var(--sky);}
+.jp-badge.master{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:var(--amber);}
+
+/* ROLE SELECT */
+.role-section{margin-bottom:32px;}
+.section-eyebrow{font-size:12px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.role-card{
+  background:var(--card);border:2px solid var(--border);border-radius:20px;
+  padding:26px 22px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;
+}
+.role-card::after{content:'';position:absolute;inset:0;opacity:0;
+  background:radial-gradient(circle at 40% 20%,var(--teal-glow),transparent 60%);
+  transition:opacity 0.3s;pointer-events:none;}
+.role-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+.role-card:hover::after{opacity:0.5;}
+.role-card.picked{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal),0 8px 40px rgba(10,236,184,0.18);}
+.role-card.picked::after{opacity:1;}
+.rc-icon{width:54px;height:54px;border-radius:14px;background:var(--deep);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;transition:all 0.2s;}
+.role-card.picked .rc-icon{background:var(--teal-dim);border-color:rgba(10,236,184,0.3);}
+.rc-name{font-family:var(--display);font-size:20px;font-weight:800;margin-bottom:8px;}
+.role-card.picked .rc-name{color:var(--teal);}
+.rc-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;}
+.rc-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.rc-tag{font-size:10px;font-weight:700;letter-spacing:0.5px;padding:4px 11px;border-radius:20px;
+  background:var(--deep);border:1px solid var(--border);color:var(--text3);}
+.role-card.picked .rc-tag{background:var(--teal-dim);border-color:rgba(10,236,184,0.2);color:var(--teal);}
+
+/* START BTN */
+.start-cta{
+  width:100%;padding:20px;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal2) 100%);
+  border:none;border-radius:14px;
+  font-family:var(--font);font-size:17px;font-weight:800;color:var(--night);
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 4px 28px rgba(10,236,184,0.35);
+}
+.start-cta:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(10,236,184,0.45);}
+.start-cta:disabled{background:var(--card2);color:var(--text3);cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ===========================
+   LESSON SCREEN
+   =========================== */
+.lesson-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 0 22px;border-bottom:1px solid var(--border);margin-bottom:32px;
+}
+.ln-left{display:flex;align-items:center;gap:14px;}
+.ln-num{
+  width:52px;height:52px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:22px;font-weight:900;color:var(--night);
+  box-shadow:0 4px 20px rgba(10,236,184,0.25);
+}
+.ln-meta{}
+.ln-badges{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.ln-type{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(10,236,184,0.25);color:var(--teal);}
+.ln-xp{font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;
+  background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);color:var(--amber);}
+.ln-title{font-family:var(--display);font-size:26px;font-weight:900;color:var(--text);letter-spacing:-0.5px;}
+.ln-prog{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 16px;text-align:center;min-width:90px;
+}
+.ln-prog-n{font-family:var(--display);font-size:20px;font-weight:900;color:var(--teal);}
+.ln-prog-l{font-size:10px;color:var(--text3);}
+
+/* CORE CONCEPT */
+.core-block{
+  background:linear-gradient(135deg,#071A12,#070D1A);
+  border:1px solid rgba(10,236,184,0.18);border-radius:22px;
+  padding:36px;margin-bottom:24px;position:relative;overflow:hidden;
+}
+.core-block::before{content:'';position:absolute;top:-60px;right:-60px;
+  width:280px;height:280px;background:radial-gradient(circle,rgba(10,236,184,0.1),transparent 70%);pointer-events:none;}
+.core-block::after{content:'';position:absolute;bottom:-60px;left:-40px;
+  width:200px;height:200px;background:radial-gradient(circle,rgba(56,189,248,0.06),transparent 70%);pointer-events:none;}
+
+.cb-label{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(10,236,184,0.5);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.cb-label::before{content:'';display:block;width:24px;height:1px;background:var(--teal);}
+.cb-headline{font-family:var(--display);font-size:26px;font-weight:900;color:var(--text);
+  line-height:1.4;margin-bottom:22px;}
+.cb-headline em{color:var(--teal);font-style:normal;}
+.cb-body{font-size:15px;color:rgba(238,242,255,0.72);line-height:2;margin-bottom:26px;}
+.cb-body strong{color:var(--text);font-weight:700;}
+.cb-body br{display:block;margin:4px 0;}
+
+/* DEEP DIVE */
+.deep-dive{
+  background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.18);
+  border-radius:14px;padding:18px 22px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.dd-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.dd-content{}
+.dd-title{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--sky);margin-bottom:8px;}
+.dd-text{font-size:14px;color:rgba(238,242,255,0.7);line-height:1.8;}
+.dd-text strong{color:var(--sky);}
+
+/* COMPARISON */
+.comparison{margin-bottom:24px;}
+.comp-title{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text3);margin-bottom:16px;}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.comp-box{border-radius:16px;padding:22px;border:1px solid;}
+.comp-box.weak{background:rgba(244,63,94,0.05);border-color:rgba(244,63,94,0.18);}
+.comp-box.strong{background:rgba(10,236,184,0.05);border-color:rgba(10,236,184,0.18);}
+.comp-tag{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.comp-box.weak .comp-tag{color:var(--rose2);}
+.comp-box.strong .comp-tag{color:var(--teal);}
+.comp-text{font-size:14px;line-height:1.75;margin-bottom:10px;}
+.comp-box.weak .comp-text{color:rgba(251,113,133,0.85);}
+.comp-box.strong .comp-text{color:rgba(10,236,184,0.85);}
+.comp-why{font-size:11px;color:var(--text3);border-top:1px solid var(--border);padding-top:8px;line-height:1.6;}
+
+/* GOLDEN RULE */
+.golden{
+  background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22);
+  border-radius:16px;padding:22px 24px;margin-bottom:32px;
+  display:flex;gap:16px;align-items:flex-start;
+}
+.g-icon{font-size:24px;flex-shrink:0;}
+.g-body{}
+.g-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:9px;}
+.g-text{font-size:14px;color:rgba(245,158,11,0.85);line-height:1.85;}
+.g-text strong{color:var(--amber2);}
+
+/* READY */
+.ready-row{display:flex;gap:12px;}
+.ready-btn{
+  flex:1;padding:18px;
+  background:var(--card2);border:1.5px solid var(--border2);border-radius:14px;
+  font-family:var(--font);font-size:16px;font-weight:700;color:var(--text);
+  cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.ready-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+/* ===========================
+   CHALLENGE SCREEN
+   =========================== */
+.ch-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px;
+}
+.ch-prog{flex:1;margin-left:20px;}
+.chp-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.chp-label{font-size:12px;color:var(--text3);}
+.chp-pct{font-size:12px;font-weight:700;color:var(--teal);}
+.chp-track{height:3px;background:var(--card2);border-radius:4px;overflow:hidden;}
+.chp-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--sky));border-radius:4px;transition:width 0.5s ease;}
+.attempt-tag{
+  flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:6px 14px;font-size:12px;color:var(--text3);
+}
+.attempt-tag span{color:var(--amber);font-weight:700;}
+
+/* SCENARIO CARD */
+.scenario-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:28px;margin-bottom:22px;position:relative;overflow:hidden;
+}
+.sc-topline{height:2px;background:linear-gradient(90deg,var(--teal),var(--sky),var(--amber));
+  position:absolute;top:0;left:0;right:0;background-size:200% 100%;animation:flow 3s linear infinite;}
+@keyframes flow{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.sc-badge-row{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.sc-type{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;background:var(--teal-dim);border:1px solid rgba(10,236,184,0.25);color:var(--teal);}
+.sc-skill{font-size:11px;color:var(--text3);padding:5px 12px;border-radius:20px;border:1px solid var(--border);}
+.sc-xp{font-size:11px;font-weight:700;color:var(--amber);margin-right:auto;}
+
+.sc-q{font-family:var(--display);font-size:22px;font-weight:800;color:var(--text);line-height:1.4;margin-bottom:12px;}
+.sc-desc{font-size:14px;color:var(--text2);line-height:1.9;margin-bottom:22px;}
+
+.scenario-box{background:var(--deep);border:1px solid var(--border2);border-radius:14px;overflow:hidden;}
+.sb-top{background:linear-gradient(90deg,var(--card2),var(--card));
+  padding:12px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
+.sbt-dot{width:8px;height:8px;background:var(--teal);border-radius:50%;box-shadow:0 0 8px var(--teal);}
+.sbt-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal);}
+.sb-content{padding:20px 22px;font-size:15px;color:var(--text);line-height:1.9;}
+.sb-content em{color:var(--amber2);font-style:normal;font-weight:600;}
+.sb-context{padding:12px 22px 18px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);line-height:1.6;}
+
+/* HINTS */
+.hints-wrap{margin-bottom:18px;}
+.hints-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.hints-row{display:flex;flex-wrap:wrap;gap:8px;}
+.hint{font-size:12px;padding:7px 16px;background:var(--deep);border:1px solid var(--border);border-radius:20px;
+  color:var(--text3);cursor:default;transition:all 0.15s;}
+.hint:hover{background:var(--teal-dim);border-color:rgba(10,236,184,0.35);color:var(--teal);}
+
+/* WRITE */
+.write-wrap{margin-bottom:20px;}
+.write-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.wh-label{font-size:12px;font-weight:700;color:var(--text3);}
+.wh-count{font-size:12px;color:var(--text3);}
+.wh-count span{color:var(--teal);font-weight:700;}
+textarea.ta{
+  width:100%;min-height:165px;padding:20px 22px;
+  font-family:var(--font);font-size:15px;line-height:1.85;direction:rtl;
+  background:var(--deep);border:1.5px solid var(--border2);border-radius:14px;
+  color:var(--text);resize:vertical;transition:border-color 0.2s,box-shadow 0.2s;
+}
+textarea.ta:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(10,236,184,0.1);}
+textarea.ta.err{border-color:var(--rose);animation:shake 0.4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}50%{transform:translateX(-5px);}}
+
+.btn-row{display:flex;gap:10px;}
+.btn-submit{
+  flex:1;padding:16px;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  border:none;border-radius:13px;
+  font-family:var(--font);font-size:16px;font-weight:800;color:var(--night);
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 4px 22px rgba(10,236,184,0.28);
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(10,236,184,0.38);}
+.btn-skip{padding:16px 22px;background:transparent;border:1.5px solid var(--border2);border-radius:13px;
+  font-family:var(--font);font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;transition:all 0.15s;}
+.btn-skip:hover{border-color:var(--border);color:var(--text);}
+
+/* ===========================
+   LOADING
+   =========================== */
+#screen-loading{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;}
+.dna{width:60px;height:80px;position:relative;}
+.dna-strand{position:absolute;width:100%;display:flex;flex-direction:column;gap:8px;align-items:center;}
+.dna-dot{width:10px;height:10px;border-radius:50%;background:var(--teal);}
+.dna-dot:nth-child(odd){background:var(--sky);}
+.dna-dot:nth-child(1){animation:dnaBounce 1.2s ease infinite 0s;}
+.dna-dot:nth-child(2){animation:dnaBounce 1.2s ease infinite 0.15s;}
+.dna-dot:nth-child(3){animation:dnaBounce 1.2s ease infinite 0.3s;}
+.dna-dot:nth-child(4){animation:dnaBounce 1.2s ease infinite 0.45s;}
+.dna-dot:nth-child(5){animation:dnaBounce 1.2s ease infinite 0.6s;}
+@keyframes dnaBounce{0%,80%,100%{transform:scale(0.5);opacity:0.3;}40%{transform:scale(1.2);opacity:1;}}
+.loading-h{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text2);}
+.loading-p{font-size:13px;color:var(--text3);}
+
+/* ===========================
+   FEEDBACK SCREEN
+   =========================== */
+.verdict{border-radius:22px;padding:32px;margin-bottom:22px;position:relative;overflow:hidden;}
+.verdict.v-great{background:linear-gradient(135deg,#041A10,#050F1A);border:1px solid rgba(10,236,184,0.35);}
+.verdict.v-ok{background:linear-gradient(135deg,#1A1200,#131A00);border:1px solid rgba(245,158,11,0.35);}
+.verdict.v-weak{background:linear-gradient(135deg,#1A0508,#0C0C18);border:1px solid rgba(244,63,94,0.35);}
+.verdict::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;
+  border-radius:50%;filter:blur(70px);opacity:0.15;pointer-events:none;}
+.verdict.v-great::before{background:var(--teal);}
+.verdict.v-ok::before{background:var(--amber);}
+.verdict.v-weak::before{background:var(--rose);}
+
+.v-top{display:flex;align-items:center;gap:22px;margin-bottom:18px;}
+.v-score-wrap{flex-shrink:0;}
+.v-score-num{font-family:var(--display);font-size:68px;font-weight:900;line-height:1;}
+.verdict.v-great .v-score-num{color:var(--teal);}
+.verdict.v-ok .v-score-num{color:var(--amber2);}
+.verdict.v-weak .v-score-num{color:var(--rose2);}
+.v-score-den{font-size:20px;color:var(--text3);vertical-align:super;}
+.v-text{}
+.v-headline{font-family:var(--display);font-size:22px;font-weight:900;margin-bottom:6px;}
+.verdict.v-great .v-headline{color:var(--text);}
+.verdict.v-ok .v-headline{color:var(--amber2);}
+.verdict.v-weak .v-headline{color:var(--rose2);}
+.v-sub{font-size:14px;color:var(--text2);line-height:1.6;}
+.v-xp{display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+  background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);
+  border-radius:20px;padding:8px 18px;font-size:13px;font-weight:700;color:var(--amber);}
+.v-xp-n{font-family:var(--display);font-size:16px;color:var(--amber2);}
+
+/* SCORES */
+.scores-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.sc-tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 10px;text-align:center;}
+.sct-bar{height:3px;border-radius:3px;margin-bottom:12px;transition:width 0.5s;}
+.sct-val{font-family:var(--display);font-size:26px;font-weight:900;line-height:1;margin-bottom:4px;}
+.sct-label{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+
+/* YOUR TEXT */
+.your-text{background:var(--deep);border-right:3px solid var(--teal);border-radius:0 14px 14px 0;
+  padding:16px 20px;margin-bottom:20px;}
+.yt-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.yt-content{font-size:14px;color:var(--text2);line-height:1.85;white-space:pre-wrap;}
+
+/* FB PANELS */
+.fb-panels{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.fb-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;}
+.fb-ph{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.fb-picon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.fb-picon.diag{background:rgba(244,63,94,0.1);}
+.fb-picon.fix{background:rgba(10,236,184,0.1);}
+.fb-picon.ex{background:rgba(245,158,11,0.1);}
+.fb-ptitle{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;}
+.fb-ptitle.diag{color:var(--rose2);}
+.fb-ptitle.fix{color:var(--teal);}
+.fb-ptitle.ex{color:var(--amber);}
+.fb-body{font-size:14px;color:var(--text2);line-height:1.9;}
+.fb-body strong{color:var(--text);}
+.better-ex{background:rgba(10,236,184,0.05);border:1px solid rgba(10,236,184,0.18);
+  border-radius:12px;padding:16px 18px;margin-top:14px;
+  font-size:14px;color:rgba(10,236,184,0.82);line-height:1.8;font-style:italic;}
+.better-ex::before{content:'✦  ';color:var(--teal);font-style:normal;font-weight:700;}
+
+/* FB ACTIONS */
+.fb-actions{display:flex;gap:12px;}
+.btn-next{flex:1;padding:16px;background:linear-gradient(135deg,var(--teal),var(--teal2));
+  border:none;border-radius:13px;font-family:var(--font);font-size:16px;font-weight:800;color:var(--night);
+  cursor:pointer;transition:all 0.2s;}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 6px 26px rgba(10,236,184,0.3);}
+.btn-retry{padding:16px 22px;background:transparent;border:1.5px solid var(--border2);border-radius:13px;
+  font-family:var(--font);font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;transition:all 0.15s;}
+.btn-retry:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ===========================
+   END SCREEN
+   =========================== */
+.end-hero{text-align:center;padding:52px 0 36px;}
+.end-float{
+  width:110px;height:110px;margin:0 auto 24px;
+  background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));
+  border:2px solid rgba(245,158,11,0.3);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:52px;
+  animation:float 3.5s ease infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.end-h{font-family:var(--display);font-size:44px;font-weight:900;letter-spacing:-1.5px;margin-bottom:8px;}
+.end-h span{background:linear-gradient(135deg,var(--teal),var(--sky));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.end-role{display:inline-block;font-size:13px;font-weight:700;padding:8px 20px;border-radius:20px;
+  margin-bottom:10px;background:var(--teal-dim);border:1px solid rgba(10,236,184,0.25);color:var(--teal);}
+.end-xptotal{font-size:14px;color:var(--text3);}
+.end-xptotal strong{color:var(--amber2);font-size:18px;font-family:var(--display);}
+
+.end-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:28px;}
+.eg-tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 10px;text-align:center;}
+.eg-val{font-family:var(--display);font-size:32px;font-weight:900;line-height:1;margin-bottom:4px;}
+.eg-label{font-size:11px;color:var(--text3);}
+
+.journey-recap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:24px;}
+.jr-h{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:18px;}
+.jr-list{display:flex;flex-direction:column;gap:10px;}
+.jr-row{display:flex;align-items:center;gap:14px;padding:12px 16px;
+  background:var(--deep);border-radius:12px;border:1px solid var(--border);}
+.jr-dot{width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;}
+.jr-dot.hi{background:rgba(10,236,184,0.15);color:var(--teal);}
+.jr-dot.mid{background:rgba(245,158,11,0.15);color:var(--amber);}
+.jr-dot.lo{background:rgba(244,63,94,0.15);color:var(--rose2);}
+.jr-info{flex:1;}
+.jr-name{font-size:13px;font-weight:700;color:var(--text2);}
+.jr-module{font-size:11px;color:var(--text3);margin-top:2px;}
+.jr-sc{font-family:var(--display);font-size:16px;font-weight:900;}
+
+.tags-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;}
+.ts-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.ts-title{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;}
+.ts-title.s{color:var(--teal);}
+.ts-title.i{color:var(--amber);}
+.ts-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.tag{font-size:11px;font-weight:700;padding:6px 13px;border-radius:20px;}
+.tag.s{background:var(--teal-dim);border:1px solid rgba(10,236,184,0.22);color:var(--teal);}
+.tag.i{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);color:var(--amber);}
+
+.end-btns{display:flex;gap:12px;justify-content:center;}
+.btn-restart{padding:16px 38px;background:linear-gradient(135deg,var(--teal),var(--teal2));
+  border:none;border-radius:13px;font-family:var(--font);font-size:15px;font-weight:800;color:var(--night);
+  cursor:pointer;transition:all 0.2s;}
+.btn-restart:hover{transform:translateY(-2px);box-shadow:0 6px 26px rgba(10,236,184,0.3);}
+.btn-export{padding:16px 26px;background:transparent;border:1.5px solid var(--border2);border-radius:13px;
+  font-family:var(--font);font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;transition:all 0.15s;}
+.btn-export:hover{border-color:var(--text3);color:var(--text);}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+<div class="toast" id="toast"></div>
+
+<div id="app">
+
+<!-- TOP BAR -->
+<nav id="topbar">
+  <div class="tb-logo">
+    <div class="tb-mark">✍</div>
+    <div>
+      <div class="tb-name">Creative Writing & Storytelling</div>
+      <div class="tb-sub">Pharma Overseas — Training Program</div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <div class="xp-pill"><span class="xp-n" id="xp-n">0</span><span class="xp-l">XP</span></div>
+    <div class="lvl-pill" id="lvl-pill">Beginner</div>
+  </div>
+</nav>
+
+<!-- ========================= WELCOME ========================= -->
+<div class="screen active" id="screen-welcome">
+  <div class="hero">
+    <div class="hero-eyebrow">🧬 Pharma Overseas — برنامج التدريب الرسمي</div>
+    <h1 class="hero-h1">
+      <div class="w1">الكلمة</div>
+      <div class="w2">اللي بتشفي</div>
+      <div class="w3">أو بتُنسى</div>
+    </h1>
+    <p class="hero-tagline">تدريب متعمق في <strong>Creative Writing & Storytelling</strong> مصمم لفريق فارما أوفرسيز — لأن الطبيب والمريض يستحقون محتوى يلمسهم قبل ما يقنعهم.</p>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar">
+      <span class="pillar-icon">🎭</span>
+      <div class="pillar-title">تدريب بالممارسة</div>
+      <div class="pillar-desc">مش محاضرة — كل محور بيتنتهي بتحدي حقيقي من واقع فارما أوفرسيز</div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🔬</span>
+      <div class="pillar-title">تقييم AI صارم</div>
+      <div class="pillar-desc">مفيش مديح فاضي — الـ AI بيحلل نصك بعمق ويديك تشخيص حقيقي</div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🔄</span>
+      <div class="pillar-title">التكرار الذكي</div>
+      <div class="pillar-desc">لو الإجابة ضعيفة — سيناريو جديد لنفس المهارة حتى تتقنها</div>
+    </div>
+  </div>
+
+  <div class="journey-preview">
+    <div class="jp-title">🗺 الرحلة التدريبية — ٦ محاور</div>
+    <div class="jp-modules">
+      <div class="jp-mod"><div class="jp-num">١</div><div class="jp-info"><div class="jp-mod-title">The Hook — الجملة التي تشعل أو تطفئ</div><div class="jp-mod-sub">فن الجملة الأولى في المحتوى الفارمي</div></div><div class="jp-badge core">الأساس</div></div>
+      <div class="jp-mod"><div class="jp-num">٢</div><div class="jp-info"><div class="jp-mod-title">Character — بناء الشخصية الإنسانية</div><div class="jp-mod-sub">الطبيب والمريض كشخصيات لا كجمهور</div></div><div class="jp-badge core">الأساس</div></div>
+      <div class="jp-mod"><div class="jp-num">٣</div><div class="jp-info"><div class="jp-mod-title">Conflict & Tension — قلب أي قصة</div><div class="jp-mod-sub">بدون صراع لا توجد قصة تستحق القراءة</div></div><div class="jp-badge craft">الحرفة</div></div>
+      <div class="jp-mod"><div class="jp-num">٤</div><div class="jp-info"><div class="jp-mod-title">Transformation Arc — رحلة التحول</div><div class="jp-mod-sub">من قبل إلى بعد — أقوى بنية قصصية</div></div><div class="jp-badge craft">الحرفة</div></div>
+      <div class="jp-mod"><div class="jp-num">٥</div><div class="jp-info"><div class="jp-mod-title">Emotional Writing — الكتابة اللي تلمس</div><div class="jp-mod-sub">الفرق بين كلام يُقرأ وكلام يُحفظ</div></div><div class="jp-badge master">الإتقان</div></div>
+      <div class="jp-mod"><div class="jp-num">٦</div><div class="jp-info"><div class="jp-mod-title">Narrative Structure — بناء القصة كاملة</div><div class="jp-mod-sub">تجميع كل المهارات في نص متكامل</div></div><div class="jp-badge master">الإتقان</div></div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <div class="section-eyebrow">اختر وظيفتك — التحديات ستتغير تبعاً لها</div>
+    <div class="role-grid">
+      <div class="role-card" onclick="pickRole('copy')" id="role-copy">
+        <div class="rc-icon">✍️</div>
+        <div class="rc-name">Copywriter</div>
+        <div class="rc-desc">بتكتب نصوص تسويقية وإعلانية للأطباء والمرضى — هدفك تحريك المشاعر واتخاذ القرار.</div>
+        <div class="rc-tags">
+          <span class="rc-tag">إيميلات طبية</span>
+          <span class="rc-tag">Ads فارمية</span>
+          <span class="rc-tag">Patient Leaflets</span>
+          <span class="rc-tag">Brand Story</span>
+        </div>
+      </div>
+      <div class="role-card" onclick="pickRole('seo')" id="role-seo">
+        <div class="rc-icon">🔍</div>
+        <div class="rc-name">SEO Content</div>
+        <div class="rc-desc">بتكتب مقالات ومحتوى رقمي للأطباء والمرضى — هدفك تبني ثقة وتحكي قصة داخل محتوى مفيد.</div>
+        <div class="rc-tags">
+          <span class="rc-tag">مقالات طبية</span>
+          <span class="rc-tag">Patient Stories</span>
+          <span class="rc-tag">Case Studies</span>
+          <span class="rc-tag">Blog Content</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="start-cta" id="start-cta" disabled onclick="startTraining()">ابدأ رحلة التدريب 🚀</button>
+</div>
+
+<!-- ========================= LESSON ========================= -->
+<div class="screen" id="screen-lesson">
+  <div class="lesson-nav">
+    <div class="ln-left">
+      <div class="ln-num" id="ln-num">١</div>
+      <div class="ln-meta">
+        <div class="ln-badges">
+          <span class="ln-type" id="ln-type">MODULE</span>
+          <span class="ln-xp" id="ln-xp">+60 XP</span>
+        </div>
+        <div class="ln-title" id="ln-title">عنوان المحور</div>
+      </div>
+    </div>
+    <div class="ln-prog"><div class="ln-prog-n" id="ln-prog-n">١/٦</div><div class="ln-prog-l">المحاور</div></div>
+  </div>
+
+  <div class="core-block">
+    <div class="cb-label">المفهوم الجوهري</div>
+    <div class="cb-headline" id="cb-headline"></div>
+    <div class="cb-body" id="cb-body"></div>
+    <div class="deep-dive">
+      <div class="dd-icon">🔬</div>
+      <div class="dd-content">
+        <div class="dd-title">لماذا يهم في الفارما تحديداً؟</div>
+        <div class="dd-text" id="dd-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison">
+    <div class="comp-title">مقارنة عملية — ضعيف vs قوي في سياق فارما أوفرسيز</div>
+    <div class="comp-grid" id="comp-grid"></div>
+  </div>
+
+  <div class="golden">
+    <div class="g-icon">⚡</div>
+    <div class="g-body">
+      <div class="g-label">القاعدة الذهبية</div>
+      <div class="g-text" id="g-text"></div>
+    </div>
+  </div>
+
+  <button class="ready-btn" onclick="goToChallenge()">فهمت — جاهز للتحدي ←</button>
+</div>
+
+<!-- ========================= CHALLENGE ========================= -->
+<div class="screen" id="screen-challenge">
+  <div class="ch-topbar">
+    <div class="ch-prog">
+      <div class="chp-row"><span class="chp-label" id="chp-label">محور ١ من ٦</span><span class="chp-pct" id="chp-pct">0%</span></div>
+      <div class="chp-track"><div class="chp-fill" id="chp-fill" style="width:0%"></div></div>
+    </div>
+    <div class="attempt-tag">محاولة <span id="att-n">١</span></div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="sc-topline"></div>
+    <div class="sc-badge-row">
+      <div class="sc-type" id="sc-type">HOOK</div>
+      <div class="sc-skill" id="sc-skill">مهارة</div>
+      <div class="sc-xp" id="sc-xp">⚡ +60 XP</div>
+    </div>
+    <div class="sc-q" id="sc-q"></div>
+    <div class="sc-desc" id="sc-desc"></div>
+    <div class="scenario-box">
+      <div class="sb-top"><div class="sbt-dot"></div><div class="sbt-label">السيناريو</div></div>
+      <div class="sb-content" id="sb-content"></div>
+      <div class="sb-context" id="sb-context"></div>
+    </div>
+  </div>
+
+  <div class="hints-wrap">
+    <div class="hints-label">تلميحات استراتيجية</div>
+    <div class="hints-row" id="hints-row"></div>
+  </div>
+
+  <div class="write-wrap">
+    <div class="write-hdr">
+      <span class="wh-label">✍️ اكتب إجابتك هنا</span>
+      <span class="wh-count"><span id="char-n">0</span> حرف</span>
+    </div>
+    <textarea class="ta" id="ta" placeholder="اكتب هنا..." oninput="onTA()"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-submit" onclick="doSubmit()">أرسل للتقييم 🔬</button>
+    <button class="btn-skip" onclick="doSkip()">تخطي</button>
+  </div>
+</div>
+
+<!-- ========================= LOADING ========================= -->
+<div class="screen" id="screen-loading">
+  <div class="dna">
+    <div class="dna-strand">
+      <div class="dna-dot"></div><div class="dna-dot"></div><div class="dna-dot"></div>
+      <div class="dna-dot"></div><div class="dna-dot"></div>
+    </div>
+  </div>
+  <div class="loading-h" id="loading-h">يحلل نصك...</div>
+  <div class="loading-p" id="loading-p">الـ AI بيقرأ كل كلمة بدقة</div>
+</div>
+
+<!-- ========================= FEEDBACK ========================= -->
+<div class="screen" id="screen-feedback">
+  <div class="verdict" id="verdict">
+    <div class="v-top">
+      <div class="v-score-wrap"><span class="v-score-num" id="v-score-n">7</span><span class="v-score-den">/10</span></div>
+      <div class="v-text">
+        <div class="v-headline" id="v-headline">كويس</div>
+        <div class="v-sub" id="v-sub">في الطريق الصح</div>
+        <div class="v-xp">⚡ كسبت <span class="v-xp-n" id="v-xp-n">30</span> XP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scores-row">
+    <div class="sc-tile"><div class="sct-bar" id="bar-hook"></div><div class="sct-val" id="sv-hook">0</div><div class="sct-label">Hook</div></div>
+    <div class="sc-tile"><div class="sct-bar" id="bar-story"></div><div class="sct-val" id="sv-story">0</div><div class="sct-label">Story</div></div>
+    <div class="sc-tile"><div class="sct-bar" id="bar-emotion"></div><div class="sct-val" id="sv-emotion">0</div><div class="sct-label">Emotion</div></div>
+    <div class="sc-tile"><div class="sct-bar" id="bar-clarity"></div><div class="sct-val" id="sv-clarity">0</div><div class="sct-label">Clarity</div></div>
+  </div>
+
+  <div class="your-text"><div class="yt-label">نصك</div><div class="yt-content" id="yt-content"></div></div>
+
+  <div class="fb-panels">
+    <div class="fb-panel">
+      <div class="fb-ph"><div class="fb-picon diag">🔍</div><div class="fb-ptitle diag">التشخيص الدقيق</div></div>
+      <div class="fb-body" id="fb-diag"></div>
+    </div>
+    <div class="fb-panel">
+      <div class="fb-ph"><div class="fb-picon fix">🔧</div><div class="fb-ptitle fix">كيف تطور النص</div></div>
+      <div class="fb-body" id="fb-fix"></div>
+    </div>
+    <div class="fb-panel">
+      <div class="fb-ph"><div class="fb-picon ex">✦</div><div class="fb-ptitle ex">مثال أفضل على نفس السيناريو</div></div>
+      <div class="fb-body" id="fb-ex-intro"></div>
+      <div class="better-ex" id="better-ex"></div>
+    </div>
+  </div>
+
+  <div class="fb-actions">
+    <button class="btn-next" id="btn-next" onclick="doNext()">المحور التالي ←</button>
+    <button class="btn-retry" onclick="doRetry()">↩ حاول مرة أخرى</button>
+  </div>
+</div>
+
+<!-- ========================= END ========================= -->
+<div class="screen" id="screen-end">
+  <div class="end-hero">
+    <div class="end-float">🏆</div>
+    <h1 class="end-h">أتممت <span id="end-title-word">التدريب!</span></h1>
+    <div class="end-role" id="end-role-badge">Copywriter — Pharma Overseas</div>
+    <div class="end-xptotal">إجمالي XP: <strong id="end-xp-total">0</strong></div>
+  </div>
+  <div class="end-grid" id="end-grid"></div>
+  <div class="journey-recap"><div class="jr-h">مراجعة الرحلة</div><div class="jr-list" id="jr-list"></div></div>
+  <div class="tags-split">
+    <div class="ts-panel"><div class="ts-title s">✓ نقاط قوتك</div><div class="ts-tags" id="strong-tags"></div></div>
+    <div class="ts-panel"><div class="ts-title i">△ ركز عليها</div><div class="ts-tags" id="improve-tags"></div></div>
+  </div>
+  <div class="end-btns">
+    <button class="btn-restart" onclick="doRestart()">↩ تدريب جديد</button>
+    <button class="btn-export" onclick="doExport()">📋 نسخ التقرير</button>
+  </div>
+</div>
+
+</div><!-- end app -->
+
+<script>
+// ====================================================
+// CURRICULUM — Creative Writing & Storytelling
+// ====================================================
+const MODULES = [
+  {
+    id:'hook',
+    badge:'THE HOOK',
+    title:'The Hook — الجملة التي تشعل أو تطفئ',
+    xp:65,
+    headline:'أول جملة تكتبها إما <em>تكسر الصمت</em> أو تصبح جزءاً منه.',
+    body:`في عالم المحتوى الفارمي، الطبيب يتلقى عشرات الرسائل يومياً، والمريض يمر على مئات المقالات. <strong>الـ Hook هو القرار الأول</strong> — هل أكمل القراءة أم أتجاوز؟<br><br>
+الـ Hook الإبداعي ليس مقدمة — هو <strong>لحظة توتر فورية</strong>. يمكن أن يكون سؤالاً لا إجابة له سهلة، أو رقماً يصدم، أو مشهداً يشبه ما يعيشه القارئ بالضبط.<br><br>
+في الكتابة الفارمية، الـ Hook الأقوى ينبع دائماً من <strong>الألم الحقيقي</strong> للطبيب أو المريض — لا من فضائل المنتج. لأن الناس لا تتوقف لتقرأ عن شيء تجهله، بل تتوقف لتقرأ عن شيء <strong>تعيشه ولم يُعبَّر عنه من قبل</strong>.`,
+    whyText:`<strong>الـ 3 ثواني الأولى</strong> هي كل ما تملكه. في المحتوى الطبي الرقمي، يغادر 70% من القراء قبل الجملة الثالثة. الـ Hook ليس تزييناً — هو الفارق بين محتوى يُقرأ ومحتوى يُهمَل.`,
+    examples:[
+      {type:'weak',tag:'✗ ضعيف',text:`"تقدم شركة فارما أوفرسيز أحدث حلولها لمرضى السكر بتركيبة علمية متقدمة."`,why:'يتحدث عن الشركة — لا يلمس الطبيب أو المريض'},
+      {type:'strong',tag:'✓ قوي',text:`"ثلاثة من كل عشرة مرضى يتوقفون عن دواء السكر في الشهر الثاني — ليس لأنه لا يعمل، بل لأن الألم الجانبي أثقل من ألم المرض نفسه."`,why:'رقم صادم + مشكلة حقيقية يعيشها الطبيب يومياً'}
+    ],
+    golden:`<strong>الـ Hook الفارمي الناجح = ألم محدد + رقم أو تفصيلة حقيقية + صياغة تجعل القارئ يحس أنك تتكلم عنه هو بالتحديد.</strong> تجنب البدء بالشركة أو المنتج — ابدأ بالإنسان.`,
+    questions:[
+      {
+        q:'اكتب Hook افتتاحي لإيميل تسويقي لطبيب',
+        desc:'جملة واحدة أو جملتان فقط — تكسر حاجز اللامبالاة وتجعل الطبيب يتوقف ويكمل.',
+        scenario:`<em>فارما أوفرسيز</em> تطرح دواءً جديداً لمقاومة الأنسولين. الطبيب المستهدف باطنة في القاهرة، يرى 35 مريض سكر يومياً، ومحبط من الأدوية التقليدية التي تُضعف الكلى على المدى البعيد.`,
+        ctx:'الجمهور: طبيب باطنة | القناة: إيميل | الهدف: يفتح الإيميل ويطلب ميتنج',
+        hints:['ابدأ برقم من واقع مرضاه','صف مشكلة يعيشها يومياً','اسأل سؤالاً لا إجابة له سهلة','لا تذكر اسم الشركة أو المنتج في الـ Hook']
+      },
+      {
+        q:'Hook لمقال صحي موجه للمريض',
+        desc:'المريض يبحث على جوجل وعنده ١٠ خيارات — اكتب الجملة الأولى التي تجعله يختار مقالك.',
+        scenario:`مقال بعنوان "أعراض مقاومة الأنسولين" على موقع <em>فارما أوفرسيز</em>. الزائر في الأربعينيات، يشعر بالتعب الدائم، زاد وزنه رغم الريجيم، ويبحث عن تفسير.`,
+        ctx:'الجمهور: مريض محتمل | القناة: مقال موقع | الهدف: يكمل القراءة',
+        hints:['صف تجربته الجسدية لا المرض','استخدم "أنت"','ربط بلحظة يومية محددة','الجملة تشبه ما يقوله لنفسه']
+      }
+    ]
+  },
+  {
+    id:'character',
+    badge:'CHARACTER',
+    title:'Character — بناء الشخصية الإنسانية',
+    xp:70,
+    headline:'الطبيب والمريض ليسا <em>جمهوراً مستهدفاً</em> — هما شخصيتان يستحقان عمقاً.',
+    body:`أكبر خطأ في الكتابة الفارمية هو التعامل مع الجمهور كـ <strong>"مريض نوع ثاني"</strong> أو <strong>"طبيب باطنة"</strong> — بدون اسم، بدون حياة، بدون خوف.<br><br>
+في Storytelling الاحترافي، الشخصية هي <strong>قلب القصة</strong>. عندما تكتب عن "أحمد، 52 سنة، أب لثلاثة، محاسب، يعمل 10 ساعات أمام الشاشة وظهره يتألم كل مساء" — أنت لا تكتب عن مريض. أنت تكتب عن إنسان.<br><br>
+بناء الشخصية الفارمية القوية يعتمد على ثلاثة أبعاد:<br>
+<strong>البُعد الجسدي:</strong> الأعراض كما يعيشها، لا كما تظهر في الكتب<br>
+<strong>البُعد العاطفي:</strong> الخوف، الأمل، الإحراج، الغضب<br>
+<strong>البُعد الاجتماعي:</strong> كيف تؤثر حالته على علاقاته ودوره في الحياة`,
+    whyText:`الأبحاث تثبت أن <strong>المحتوى الطبي الذي يصف تجربة إنسانية محددة</strong> يحصل على وقت قراءة أعلى بـ <strong>٢.٨ مرة</strong> من المحتوى الذي يصف الحالة الطبية فقط. الشخصية هي ما يجعل القارئ يقول "هذا يشبهني".`,
+    examples:[
+      {type:'weak',tag:'✗ بدون شخصية',text:`"مرضى الروماتويد يعانون من آلام مفاصل وتصلب صباحي يؤثر على جودة حياتهم."`,why:'وصف طبي بارد — لا يصل إلى أي قارئ بشكل شخصي'},
+      {type:'strong',tag:'✓ شخصية حقيقية',text:`"هدى، 43 سنة، مدرسة. بتصحى كل يوم وأصابعها متورمة — أول حاجة بتعملها في الصبح مش ترشف قهوتها، هي تحاول تعمل قبضة. لو قدرت، يبقى يوم كويس."`,why:'اسم + مهنة + تفصيلة حسية = شخصية تتذكرها'}
+    ],
+    golden:`<strong>الشخصية القوية = اسم + عمر + تفصيلة مهنية أو عائلية + لحظة جسدية أو عاطفية محددة.</strong> كل تفصيلة إضافية تجعل القارئ يقول "هذا يشبه شخصاً أعرفه".`,
+    questions:[
+      {
+        q:'ابنِ شخصية مريض في فقرة واحدة',
+        desc:'ابنِ شخصية كاملة لمريض — بدون أن تذكر المرض صراحةً في الجملة الأولى.',
+        scenario:`دواء لضغط الدم من <em>فارما أوفرسيز</em>. ابنِ شخصية المريض المستهدف: رجل في الخمسينيات، متزوج، عنده أحفاد، اكتشف مؤخراً أن ضغطه مرتفع. اكتب فقرة تعريفية بالشخصية.`,
+        ctx:'الهدف: شخصية تُستخدم في مواد التدريب والمحتوى التسويقي',
+        hints:['ابدأ باسم وعمر وتفصيلة حياتية','صف لحظة اكتشف فيها المشكلة','التفصيلة العائلية تضيف إنسانية','الخوف الحقيقي — ليس من المرض بل مما يعنيه']
+      },
+      {
+        q:'شخصية الطبيب — مزود الرعاية كإنسان',
+        desc:'الطبيب ليس مجرد مستهدف — هو شخصية لها ضغوطها وقراراتها. ابنِها.',
+        scenario:`إيميل تسويقي من <em>فارما أوفرسيز</em> لطبيبة أطفال في الإسكندرية. ابنِ شخصيتها في فقرة كمدخل لنص تسويقي يخاطبها كإنسانة لا كمستهدفة.`,
+        ctx:'الجمهور: طبيبة أطفال | القناة: إيميل تسويقي',
+        hints:['دكتورة أم؟ طبيبة جديدة؟','الضغط اليومي في العيادة','قرار وصف الدواء — المسؤولية','ما الذي تخشاه وما الذي تأمله لمريضها']
+      }
+    ]
+  },
+  {
+    id:'conflict',
+    badge:'CONFLICT & TENSION',
+    title:'Conflict & Tension — قلب القصة',
+    xp:75,
+    headline:'بدون صراع، القصة <em>مجرد قائمة مزايا</em> مُقنَّعة بكلمات.',
+    body:`الصراع هو المحرك الأساسي لأي قصة. في الكتابة الفارمية، الصراع ليس درامياً بالضرورة — لكنه <strong>التوتر بين ما يريده المريض أو الطبيب وما يعيشه فعلاً</strong>.<br><br>
+أنواع الصراع في القصة الفارمية:<br>
+<strong>صراع داخلي:</strong> المريض الذي يعرف أنه يحتاج الدواء لكنه خائف من الاعتراف<br>
+<strong>صراع مع الظروف:</strong> الطبيب الذي يريد أفضل علاج لكن بروتوكول التأمين يقيده<br>
+<strong>صراع مع الوقت:</strong> المريض الذي يؤجل العلاج حتى "يفرغ" من ضغوط الحياة<br><br>
+<strong>الـ Tension</strong> هو الحالة المستمرة من التوتر التي تجعل القارئ يريد معرفة ما سيحدث. تحقق ذلك بـ <strong>السؤال المعلّق</strong> الذي لا تجيب عنه فوراً، أو بـ <strong>التناقض الصادم</strong> بين مظهر الحال وحقيقته.`,
+    whyText:`الـ <strong>Narrative Tension</strong> هو السبب الأول الذي يجعل القارئ يكمل. في المحتوى الطبي، الـ Tension لا يعني إخافة المريض — بل <strong>الاعتراف بالحقيقة الصعبة</strong> التي يعرفها ولم يجد من يتكلم عنها بصدق.`,
+    examples:[
+      {type:'weak',tag:'✗ بدون توتر',text:`"التهاب الكبد C مرض فيروسي قابل للعلاج بنسبة نجاح 95% مع العلاج المناسب."`,why:'معلومة طبية صحيحة لكن لا توتر — لا سبب للاستمرار'},
+      {type:'strong',tag:'✓ توتر حقيقي',text:`"كريم، 43 سنة، اكتشف إصابته بالتهاب الكبد C في تحليل روتيني. ما كانش عنده أي أعراض — وده بالضبط اللي كان بيخليه يقول لنفسه 'لأ، أنا كويس.' لمدة سنتين."`,why:'الصراع الداخلي بين المعرفة والإنكار — يجعلك تريد معرفة ما حدث'}
+    ],
+    golden:`<strong>ابدأ في منتصف الصراع — لا قبله.</strong> لا تقل "كان يعاني من آلام الظهر" — قل "الخميس الماضي، رفض يحضر عيد ميلاد ابنه بسبب ظهره، وهذا أول مرة يفعل ذلك." التفصيلة الواحدة الصادمة أقوى من فقرة كاملة من الوصف.`,
+    questions:[
+      {
+        q:'اكتب فقرة صراع لـ Patient Story',
+        desc:'ابدأ في منتصف اللحظة الأشد توتراً — لا قبلها.',
+        scenario:`مريض روماتويد من مواد <em>فارما أوفرسيز</em> التسويقية. سيدة، مدرسة، عمرها 45. الصراع: تعرف أنها تحتاج علاجاً أقوى لكنها خائفة من الآثار الجانبية التي سمعت عنها من زميلة. اكتب فقرة الصراع.`,
+        ctx:'الهدف: Case Story في المواد التسويقية للأطباء',
+        hints:['ابدأ في لحظة القرار الصعب','الخوف محدد — ليس خوفاً عاماً','الصراع مع نفسها لا مع شخص','التفصيلة المهنية تضيف ثقلاً']
+      },
+      {
+        q:'Tension في إيميل تسويقي للطبيب',
+        desc:'اكتب فقرة افتتاحية تخلق توتراً حقيقياً في ذهن الطبيب — توتر يجعله يريد الحل.',
+        scenario:`إيميل لطبيب عظام من <em>فارما أوفرسيز</em> عن مسكن ألم جديد. الصراع: الطبيب يصف NSAIDs يومياً لكنه يعرف ضررها على المعدة ويشعر بثقل هذا القرار مع مرضى عندهم تاريخ معدي.`,
+        ctx:'القناة: إيميل تسويقي | الهدف: يستشعر التوتر ويريد الحل',
+        hints:['الصراع مع الضمير الطبي لا مع الدواء','اذكر حالة محددة بدون اسم','السؤال المعلق يخلق التوتر','لا تعطِ الحل في البداية']
+      }
+    ]
+  },
+  {
+    id:'transformation',
+    badge:'TRANSFORMATION ARC',
+    title:'Transformation Arc — رحلة التحول',
+    xp:80,
+    headline:'لا تبع الدواء — بع <em>الشخص الذي سيكون عليه</em> بعد الدواء.',
+    body:`رحلة التحول هي أقوى بنية قصصية في الكتابة الفارمية. الناس لا تشتري منتجاً — <strong>تشتري نسخة أفضل من أنفسهم</strong>.<br><br>
+مراحل الـ Transformation Arc الكاملة:<br>
+<strong>١. قبل — الوضع المؤلم:</strong> الحياة مع المشكلة. تفصيل الألم لا بوصفه طبياً بل حياتياً<br>
+<strong>٢. لحظة التحول — الكاتاليست:</strong> اللحظة التي تغير فيها شيء — قرار، موعد، توصية<br>
+<strong>٣. المقاومة والتكيف:</strong> التحول ليس سلساً دائماً — الصدق هنا يبني الثقة<br>
+<strong>٤. بعد — الحياة الجديدة:</strong> ليس "تحسنت الأعراض" — بل "عدت تفعل ما تحب"<br><br>
+<strong>الخطأ الأكثر شيوعاً:</strong> تخطي مراحل ١ و٢ و٣ والقفز مباشرة إلى "الآن أنا بصحة جيدة". القصة التي تبدأ من الألم الحقيقي وتصل إلى التحول هي التي تُصدَّق وتُتذكر.`,
+    whyText:`الـ <strong>Before & After Story</strong> هي الأكثر مشاركةً في المحتوى الطبي الرقمي. لكن الفرق بين قصة تُشارَك وقصة تُنسى هو <strong>صدق الـ "قبل"</strong>. كلما كان الـ "قبل" أكثر تفصيلاً وصدقاً، كان الـ "بعد" أكثر إقناعاً.`,
+    examples:[
+      {type:'weak',tag:'✗ تحول مسطح',text:`"استخدم أحمد الدواء لمدة ٣ أشهر وتحسنت حالته بشكل ملحوظ وعاد لممارسة حياته الطبيعية."`,why:'بدون تفاصيل — لا يُصدَّق ولا يُتذكر'},
+      {type:'strong',tag:'✓ تحول حقيقي',text:`"أحمد كان بيرفض يزور أحفاده لأن سلم البيت كان كابوساً. أول مرة بعد العلاج صعد الدور التاني من غير ما يتكئ على الحيطة — لقى نفسه بيضحك من غير ما يفهم ليه."`,why:'التفصيلة + اللحظة + رد الفعل العفوي = تحول يُصدَّق'}
+    ],
+    golden:`<strong>الـ "بعد" القوي لا يصف تحسن الحالة الطبية — يصف تحسن الحياة.</strong> "انخفضت نسبة السكر" ضعيف. "بدأ يصحى قبل منبهه بدقائق — وهذا لم يحدث منذ سنوات" قوي.`,
+    questions:[
+      {
+        q:'اكتب Transformation Story كاملة في ٦-٨ جمل',
+        desc:'القبل والتحول والبعد — مع كل التفاصيل الإنسانية.',
+        scenario:`دواء للتهاب المفاصل من <em>فارما أوفرسيز</em>. المريض: سيد، 58 سنة، نجار. كانت يداه تؤلمانه لدرجة أنه توقف عن العمل. اكتب قصة تحوله الكاملة.`,
+        ctx:'القناة: Patient Testimonial في المواد التسويقية والموقع الإلكتروني',
+        hints:['الـ "قبل": ما الذي توقف عن فعله؟','لحظة التحول: لحظة واحدة محددة','المقاومة: لم يكن سهلاً فوراً','الـ "بعد": أول شيء عاد يفعله بيديه']
+      },
+      {
+        q:'Transformation Arc لـ Brand Story لفارما أوفرسيز',
+        desc:'قصة تأسيس تحكي تحول الشركة نفسها — من مشكلة رأتها إلى حل صنعته.',
+        scenario:`<em>فارما أوفرسيز</em> شركة توزيع أدوية بدأت من إيمان بأن المريض المصري يستحق وصولاً أسرع لأدوية العالم. اكتب قصة التأسيس كـ Transformation Arc.`,
+        ctx:'القناة: About Us Page + مواد العروض التقديمية',
+        hints:['المشكلة التي رأاها المؤسس','لحظة القرار بالتغيير','التحديات في البداية','الحال الآن — والمهمة المستمرة']
+      }
+    ]
+  },
+  {
+    id:'emotion',
+    badge:'EMOTIONAL WRITING',
+    title:'Emotional Writing — الكتابة اللي تلمس',
+    xp:85,
+    headline:'الكلمات التي تُحفظ <em>لا تعلّم — تُشعر.</em>',
+    body:`الفرق بين كتابة معلوماتية وكتابة عاطفية ليس في الموضوع — بل في <strong>الزاوية التي تُعالجه منها</strong>.<br><br>
+الكتابة العاطفية في الفارما لا تعني المبالغة أو الابتزاز العاطفي — تعني <strong>الصدق مع الجانب الإنساني</strong> للمرض والعلاج.<br><br>
+أدوات الكتابة العاطفية:<br>
+<strong>الصورة الحسية:</strong> لا تقل "ألم" — قل "مثل إبرة تُغرز ببطء بين الضلوع"<br>
+<strong>اللحظة اليومية الصغيرة:</strong> أقوى من الوصف الكبير. "لم يقدر يربط حذاءه" أقوى من "فقد استقلاليته"<br>
+<strong>صوت الشخصية الداخلي:</strong> ما الذي تقوله الشخصية لنفسها؟<br>
+<strong>اللحظة غير المتوقعة:</strong> ردود الفعل العفوية هي الأكثر إنسانيةً`,
+    whyText:`الـ <strong>Emotional Recall</strong> للمحتوى الطبي يرتفع بـ <strong>٣ مرات</strong> عندما يتضمن تجربة حسية أو عاطفية محددة. الطبيب يتذكر الحالة التي أثّرت فيه — لا الإحصائية التي قرأها.`,
+    examples:[
+      {type:'weak',tag:'✗ معلوماتي',text:`"المرضى الذين يعانون من اكتئاب ما بعد الجلطة يحتاجون دعماً نفسياً وعلاجاً دوائياً متكاملاً."`,why:'صحيح طبياً، لكن لا يُشعر بشيء'},
+      {type:'strong',tag:'✓ عاطفي وصادق',text:`"كانت زوجته تحضر له الشاي كل صباح — وبعد الجلطة، بقى هو من يحضره لها. مش لأنه اتعافى. لأنه أدرك للمرة الأولى إنه محتاج يتعافى."`,why:'لحظة صغيرة + تحول داخلي + صدق إنساني'}
+    ],
+    golden:`<strong>استبدل كل صفة عامة بتفصيلة حسية أو لحظة يومية.</strong> "ألم شديد" → "مثل حجر على الصدر في كل خطوة". "فقدان الاستقلالية" → "أول مرة طلب من ابنه يساعده في ارتداء جاكيتته". هذا التبديل هو سر الكتابة العاطفية.`,
+    questions:[
+      {
+        q:'حوّل نصاً معلوماتياً إلى كتابة عاطفية',
+        desc:'النص المعطى صحيح طبياً لكن باردٌ — حوّله إلى كتابة تُشعر دون أن تفقد المعلومة.',
+        scenario:`هذا النص من موقع <em>فارما أوفرسيز</em>: "مرضى فشل القلب يعانون من ضيق تنفس وتورم أطراف وإعياء مزمن يؤثر على قدرتهم على ممارسة الأنشطة اليومية." حوّله إلى نص عاطفي صادق.`,
+        ctx:'الجمهور: أهل المريض وزوار الموقع | الهدف: بناء تعاطف وفهم',
+        hints:['استبدل كل صفة عامة بتفصيلة حسية','اختر لحظة يومية واحدة محددة','صوت المريض الداخلي','لا تبالغ — الصدق أقوى من الدراما']
+      },
+      {
+        q:'اكتب Emotional Patient Leaflet فقرة',
+        desc:'المريض خائف — اكتب فقرة تطمئنه بصدق دون وعود مبالغ فيها.',
+        scenario:`دواء مزمن لأمراض القلب من <em>فارما أوفرسيز</em> — جرعة يومية طويلة الأمد. المريض في الستينيات، خائف من "الاعتماد على الدواء للأبد"، ويسأل نفسه إذا كان هذا يعني أنه "مريض للأبد". اكتب فقرة تعالج هذا الخوف عاطفياً.`,
+        ctx:'القناة: Patient Information Leaflet | الهدف: الالتزام بالجرعة اليومية',
+        hints:['اعترف بالخوف أولاً لا تتجاهله','الفرق بين "مريض" و"محمي"','لحظة إنسانية من الحياة اليومية','لا وعود طبية — فقط صدق إنساني']
+      }
+    ]
+  },
+  {
+    id:'structure',
+    badge:'NARRATIVE STRUCTURE',
+    title:'Narrative Structure — بناء القصة الكاملة',
+    xp:90,
+    headline:'القصة الكاملة ليست طويلة — <em>هي كاملة الأركان.</em>',
+    body:`الـ Narrative Structure هو الهيكل الذي يحمل كل ما تعلمته. القصة الفارمية المكتملة — سواء كانت إيميلاً أو مقالاً أو إعلاناً — تحتاج إلى:<br><br>
+<strong>Opening (Hook + Character):</strong> من هو القارئ وما الذي يلمسه فوراً<br>
+<strong>Rising Action (Conflict + Tension):</strong> الصراع الذي يبقيه متابعاً<br>
+<strong>Climax (Moment of Truth):</strong> اللحظة التي يتوقف عندها كل شيء<br>
+<strong>Resolution (Transformation):</strong> التحول — كيف تغيرت الحياة<br>
+<strong>Call to Meaning (لا Call to Action):</strong> ليس "اضغط هنا" — بل "هذا ما يعنيه لك"<br><br>
+في الكتابة الفارمية، الـ Structure لا يعني أن النص طويل. بريد إلكتروني من ٥ جمل يمكن أن يكون قصة كاملة الأركان. المقياس ليس الطول — <strong>بل هل كل عنصر موجود وقوي؟</strong>`,
+    whyText:`المحتوى الفارمي ذو الـ <strong>Narrative Structure الكامل</strong> يحصل على معدل إكمال قراءة أعلى بـ <strong>٤ مرات</strong> من المحتوى الذي يقدم المعلومات بشكل مسطح. البنية هي ما يجعل القارئ يصل إلى النهاية.`,
+    examples:[
+      {type:'weak',tag:'✗ بدون بنية',text:`"فارما أوفرسيز تقدم أفضل الحلول لمرضى الجهاز التنفسي. منتجاتنا معتمدة دولياً وفعّالة بنسبة 94%. تواصل معنا للمزيد."`,why:'لا شخصية، لا صراع، لا تحول — مجرد ادعاءات'},
+      {type:'strong',tag:'✓ بنية كاملة',text:`"كل شتاء، كانت منى تنتظر الأزمة. ليس لأنها لا تعرف أنها آتية — بل لأنها لا تعرف متى. (Hook+Character) الربو لا يُخبرك بمواعيده. (Conflict) هذا الشتاء كان مختلفاً. (Climax) منى لم تنتظر الأزمة. لأول مرة منذ سنوات، هي من كانت مستعدة لها. (Transformation)"`,why:'كل ركن موجود في ٤ جمل فقط'}
+    ],
+    golden:`<strong>قبل الكتابة، اسأل نفسك: من هو القارئ؟ ما الذي يؤلمه؟ ما اللحظة التي تغير عندها شيء؟ كيف تبدو حياته بعد؟ وماذا يعني هذا له شخصياً؟</strong> إذا أجبت على الخمسة — عندك قصة. إذا أجبت على أقل — عندك معلومة.`,
+    questions:[
+      {
+        q:'اكتب إيميل تسويقي كامل كقصة',
+        desc:'إيميل من ٢٠٠-٢٥٠ كلمة يطبق الـ Narrative Structure الكامل.',
+        scenario:`إيميل من <em>فارما أوفرسيز</em> لطبيب أمراض صدرية عن بروتوكول جديد للربو. الإيميل يدعوه لحضور Webinar. طبّق الـ Hook والـ Character والـ Conflict والـ Transformation وانتهِ بـ Call to Meaning لا Call to Action تقليدي.`,
+        ctx:'القناة: إيميل رسمي | الجمهور: طبيب صدرية | الهدف: يسجل في الـ Webinar',
+        hints:['Hook: مشكلة يعيشها الطبيب يومياً','Character: مريض واحد محدد لا فئة','Conflict: اللحظة التي يشعر فيها بعجز','Transformation: كيف غيّر البروتوكول الجديد شيئاً','Call to Meaning: ما الذي يعنيه هذا الـ Webinar له']
+      },
+      {
+        q:'Patient Story كاملة للموقع الإلكتروني',
+        desc:'قصة ٢٥٠-٣٠٠ كلمة بكل الأركان — تُستخدم في موقع فارما أوفرسيز.',
+        scenario:`مريضة بالتهاب المفاصل الروماتويدي تستجيب لدواء من <em>فارما أوفرسيز</em>. سيدة، 47 سنة، معلمة، أم. قبل: لم تستطع مسك القلم. بعد: عادت للتدريس. اكتب القصة الكاملة بكل أركانها.`,
+        ctx:'القناة: Testimonials Page على الموقع | الجمهور: مرضى وأطباء',
+        hints:['Opening: لحظة صعبة محددة في الفصل','الصراع: قرار ترك التدريس','لحظة التحول: أول يوم عادت فيه','البعد: ما الذي عاد معها غير التدريس','النهاية: معنى لا خاتمة']
+      }
+    ]
+  }
+];
+
+const ROLE_DATA = {
+  copy:{name:'Copywriter',badge:'Copywriter — Pharma Overseas'},
+  seo:{name:'SEO Content Writer',badge:'SEO Content — Pharma Overseas'}
+};
+const LEVELS = [{min:0,name:'Beginner'},{min:100,name:'Developing'},{min:260,name:'Skilled'},{min:450,name:'Advanced'},{min:680,name:'Expert'},{min:900,name:'Master'}];
+
+let role='', modIdx=0, qIdx=0, attempt=1, xpTotal=0;
+let results=[], currentAnswer='';
+
+function getLevel(x){return[...LEVELS].reverse().find(l=>x>=l.min)||LEVELS[0];}
+function updateXP(add=0){xpTotal+=add;document.getElementById('xp-n').textContent=xpTotal;document.getElementById('lvl-pill').textContent=getLevel(xpTotal).name;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function toast(msg,type='',ms=2600){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type);setTimeout(()=>t.classList.remove('show'),ms);}
+
+function pickRole(r){
+  role=r;
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('picked'));
+  document.getElementById('role-'+r).classList.add('picked');
+  document.getElementById('start-cta').disabled=false;
+}
+
+function startTraining(){modIdx=0;qIdx=0;attempt=1;results=[];showLesson();}
+
+function showLesson(){
+  if(modIdx>=MODULES.length){showEnd();return;}
+  const m=MODULES[modIdx];
+  document.getElementById('ln-num').textContent=ar(modIdx+1);
+  document.getElementById('ln-type').textContent=m.badge;
+  document.getElementById('ln-xp').textContent='+'+m.xp+' XP';
+  document.getElementById('ln-title').textContent=m.title;
+  document.getElementById('cb-headline').innerHTML=m.headline;
+  document.getElementById('cb-body').innerHTML=m.body;
+  document.getElementById('dd-text').innerHTML=m.whyText;
+  document.getElementById('comp-grid').innerHTML=m.examples.map(e=>`
+    <div class="comp-box ${e.type}">
+      <div class="comp-tag">${e.tag}</div>
+      <div class="comp-text">${e.text}</div>
+      <div class="comp-why">${e.why}</div>
+    </div>`).join('');
+  document.getElementById('g-text').innerHTML=m.golden;
+  document.getElementById('ln-prog-n').textContent=ar(modIdx+1)+'/'+ar(MODULES.length);
+  show('screen-lesson');
+}
+
+function goToChallenge(){
+  const m=MODULES[modIdx];
+  const q=m.questions[qIdx];
+  const pct=Math.round((modIdx/MODULES.length)*100);
+  document.getElementById('chp-label').textContent='محور '+ar(modIdx+1)+' من '+ar(MODULES.length);
+  document.getElementById('chp-pct').textContent=pct+'%';
+  document.getElementById('chp-fill').style.width=pct+'%';
+  document.getElementById('att-n').textContent=ar(attempt);
+  document.getElementById('sc-type').textContent=m.badge;
+  document.getElementById('sc-skill').textContent=m.title.split('—')[0].trim();
+  document.getElementById('sc-xp').textContent='⚡ +'+m.xp+' XP';
+  document.getElementById('sc-q').textContent=q.q;
+  document.getElementById('sc-desc').textContent=q.desc;
+  document.getElementById('sb-content').innerHTML=q.scenario;
+  document.getElementById('sb-context').textContent=q.ctx||'';
+  document.getElementById('hints-row').innerHTML=(q.hints||[]).map(h=>`<div class="hint">${h}</div>`).join('');
+  document.getElementById('ta').value='';
+  document.getElementById('char-n').textContent='0';
+  show('screen-challenge');
+}
+
+function onTA(){document.getElementById('char-n').textContent=document.getElementById('ta').value.length;}
+
+async function doSubmit(){
+  const ans=document.getElementById('ta').value.trim();
+  if(ans.length<25){
+    const ta=document.getElementById('ta');
+    ta.classList.add('err');
+    setTimeout(()=>ta.classList.remove('err'),500);
+    toast('اكتب إجابة أطول — على الأقل ٢٥ حرف','t-bad');return;
+  }
+  currentAnswer=ans;
+  show('screen-loading');
+  const msgs=[
+    ['يحلل قوة الـ Hook...','يقيس الجملة الأولى'],
+    ['يفحص بناء الشخصية...','هل للشخصية عمق إنساني؟'],
+    ['يقيم الأثر العاطفي...','هل يلمس أم يخبر فقط؟'],
+    ['يكتب التشخيص الدقيق...','الصدق أهم من المجاملة']
+  ];
+  let mi=0;
+  const iv=setInterval(()=>{const x=msgs[mi%msgs.length];document.getElementById('loading-h').textContent=x[0];document.getElementById('loading-p').textContent=x[1];mi++;},1100);
+
+  const m=MODULES[modIdx];const q=m.questions[qIdx];
+  const sys=`أنت مدرب متخصص في Creative Writing وStorytelling للمحتوى الفارمي. تقيّم نصوص كتّاب يعملون في شركة فارما أوفرسيز المصرية.
+
+التركيز الكامل على مهارات الكتابة الإبداعية والـ Storytelling — لا على المعلومات الطبية أو تقنيات الـ SEO.
+
+معايير التقييم:
+- نص عشوائي أو بدون إبداع حقيقي: 1-3
+- نص يحاول لكن يفتقر للعمق والتفاصيل الإنسانية: 3-5
+- نص فيه عناصر جيدة لكن يمكن تعميقه: 5-7
+- نص إبداعي فيه Hook وشخصية وعاطفة: 7-8.5
+- نص استثنائي يلمس ويُتذكر: 8.5-10 (نادر جداً)
+
+المحور الذي يُقيَّم: ${m.badge} — ${m.title}
+
+رد بـ JSON صرف بلا نص خارجه وبلا backticks:
+{"hook_score":X,"story_score":X,"emotion_score":X,"clarity_score":X,"overall":X,"xp_earned":X,"headline":"عنوان صادم للأداء","sub":"جملة توصيف دقيقة","diagnosis":"تشخيص عميق وصريح لمشكلة الكتابة — ليس التقييم الطبي. 2-3 جمل محددة","fix":"خطوات إبداعية عملية لتطوير النص — 2-3 جمل","ex_intro":"جملة تمهيدية","better_example":"مثال أفضل كامل يطبق مهارة ${m.badge} على نفس السيناريو","strong_tags":["نقطة قوة","نقطة قوة"],"improve_tags":["نقطة تطوير","نقطة تطوير"]}
+
+xp_earned: overall>=8 → ${m.xp}، overall 6-7.9 → ${Math.round(m.xp*0.6)}، أقل من 6 → ${Math.round(m.xp*0.25)}`;
+
+  const usr=`المحور: ${m.badge}\nالمهارة: ${m.title}\nالتحدي: ${q.q}\nالسيناريو: ${q.scenario.replace(/<[^>]+>/g,'')}\nالسياق: ${q.ctx}\n\nنص المتدرب:\n"${ans}"`;
+
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sys,messages:[{role:'user',content:usr}]})});
+    const d=await r.json();
+    clearInterval(iv);
+    const raw=d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const p=JSON.parse(raw);
+    results.push({module:m.title,badge:m.badge,score:p.overall,xpE:p.xp_earned,answer:ans,fb:p});
+    updateXP(p.xp_earned);
+    renderFeedback(p,ans);
+  }catch(e){
+    clearInterval(iv);
+    toast('خطأ في الاتصال — حاول مرة أخرى','t-bad',3000);
+    show('screen-challenge');
+  }
+}
+
+function renderFeedback(p,ans){
+  const vc=document.getElementById('verdict');
+  vc.className='verdict '+(p.overall>=7.5?'v-great':p.overall>=5.5?'v-ok':'v-weak');
+  document.getElementById('v-score-n').textContent=p.overall;
+  document.getElementById('v-headline').textContent=p.headline;
+  document.getElementById('v-sub').textContent=p.sub;
+  document.getElementById('v-xp-n').textContent=p.xp_earned;
+  ['hook','story','emotion','clarity'].forEach(k=>{
+    const v=p[k+'_score'];
+    const c=v>=7.5?'var(--teal)':v>=5?'var(--amber)':'var(--rose2)';
+    document.getElementById('sv-'+k).textContent=v;
+    document.getElementById('sv-'+k).style.color=c;
+    document.getElementById('bar-'+k).style.cssText=`background:${c};width:${v*10}%`;
+  });
+  document.getElementById('yt-content').textContent=ans;
+  document.getElementById('fb-diag').innerHTML=p.diagnosis;
+  document.getElementById('fb-fix').innerHTML=p.fix;
+  document.getElementById('fb-ex-intro').textContent=p.ex_intro||'';
+  document.getElementById('better-ex').textContent=p.better_example;
+  const isLast=modIdx>=MODULES.length-1;
+  document.getElementById('btn-next').textContent=isLast?'🏆 شوف النتيجة النهائية':'المحور التالي ←';
+  if(p.overall>=7.5) toast('ممتاز! +'+p.xp_earned+' XP 🔥','t-xp');
+  else if(p.overall>=5.5) toast('كويس! +'+p.xp_earned+' XP ⚡','t-xp');
+  else toast('راجع التشخيص وحاول مرة أخرى 💪','');
+  show('screen-feedback');
+}
+
+function doNext(){modIdx++;qIdx=0;attempt=1;if(modIdx>=MODULES.length)showEnd();else showLesson();}
+function doRetry(){const m=MODULES[modIdx];qIdx=(qIdx+1)%m.questions.length;attempt++;goToChallenge();}
+function doSkip(){results.push({module:MODULES[modIdx].title,badge:MODULES[modIdx].badge,score:0,xpE:0,answer:'(تخطي)',fb:{}});doNext();}
+
+function showEnd(){
+  const valid=results.filter(r=>r.score>0);
+  const avg=valid.length?Math.round(valid.reduce((a,r)=>a+r.score,0)/valid.length*10)/10:0;
+  const titles=[[8,'محترف في Storytelling'],[6,'قصاص واعد'],[4,'كاتب يتطور'],[0,'في بداية الرحلة']];
+  document.getElementById('end-title-word').textContent=titles.find(t=>avg>=t[0])[1]+'!';
+  document.getElementById('end-role-badge').textContent=ROLE_DATA[role]?.badge||'Pharma Overseas';
+  document.getElementById('end-xp-total').textContent=xpTotal;
+  const keys=['hook','story','emotion','clarity'];
+  const avgs=keys.map(k=>{const vs=results.filter(r=>r.fb&&r.fb[k+'_score']>0).map(r=>r.fb[k+'_score']);return vs.length?Math.round(vs.reduce((a,v)=>a+v,0)/vs.length*10)/10:0;});
+  const labels=['Hook','Story','Emotion','Clarity','المجموع'];
+  document.getElementById('end-grid').innerHTML=[...avgs,avg].map((v,i)=>{
+    const c=v>=7.5?'var(--teal)':v>=5?'var(--amber2)':'var(--rose2)';
+    return`<div class="eg-tile"><div class="eg-val" style="color:${c}">${v}</div><div class="eg-label">${labels[i]}</div></div>`;
+  }).join('');
+  document.getElementById('jr-list').innerHTML=results.map((r,i)=>{
+    const c=r.score>=7.5?'hi':r.score>=5?'mid':'lo';
+    const sc=r.score>0?r.score+'/10':'تخطي';
+    const scColor=r.score>=7.5?'var(--teal)':r.score>=5?'var(--amber2)':'var(--rose2)';
+    return`<div class="jr-row"><div class="jr-dot ${c}">${i+1}</div><div class="jr-info"><div class="jr-name">${r.badge}</div><div class="jr-module">${r.module}</div></div><div class="jr-sc" style="color:${scColor}">${sc}</div></div>`;
+  }).join('');
+  const allS=[...new Set(results.flatMap(r=>(r.fb&&r.fb.strong_tags)||[]))].slice(0,6);
+  const allI=[...new Set(results.flatMap(r=>(r.fb&&r.fb.improve_tags)||[]))].slice(0,6);
+  document.getElementById('strong-tags').innerHTML=allS.map(t=>`<span class="tag s">${t}</span>`).join('');
+  document.getElementById('improve-tags').innerHTML=allI.map(t=>`<span class="tag i">${t}</span>`).join('');
+  show('screen-end');
+}
+
+function doExport(){
+  const valid=results.filter(r=>r.score>0);
+  const avg=valid.length?Math.round(valid.reduce((a,r)=>a+r.score,0)/valid.length*10)/10:0;
+  let t=`تقرير تدريب Creative Writing & Storytelling\nفارما أوفرسيز\n`;
+  t+=`الوظيفة: ${ROLE_DATA[role]?.name||''} | المجموع: ${avg}/10 | XP: ${xpTotal} | المستوى: ${getLevel(xpTotal).name}\n\n`;
+  results.forEach((r,i)=>{
+    t+=`${i+1}. ${r.badge}\n${r.module}\nالدرجة: ${r.score>0?r.score+'/10':'تخطي'} | XP: ${r.xpE}\n`;
+    t+=`إجابتك:\n${r.answer}\n`;
+    if(r.fb&&r.fb.diagnosis) t+=`التشخيص: ${r.fb.diagnosis}\n`;
+    t+='\n';
+  });
+  navigator.clipboard.writeText(t).then(()=>toast('✓ تم نسخ التقرير!','t-good')).catch(()=>toast('لم يتم النسخ','t-bad'));
+}
+
+function doRestart(){
+  role='';modIdx=0;qIdx=0;attempt=1;xpTotal=0;results=[];currentAnswer='';
+  document.getElementById('xp-n').textContent='0';
+  document.getElementById('lvl-pill').textContent='Beginner';
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('picked'));
+  document.getElementById('start-cta').disabled=true;
+  show('screen-welcome');
+}
+
+function ar(n){const a=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];return String(n).split('').map(d=>a[+d]||d).join('');}
+</script>
+</body>
+</html>
